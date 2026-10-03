@@ -152,8 +152,7 @@ npm run preview
 
 ## Author
 
-- GitHub - [@Mohamedmostafa110](https://github.com/Mohamedmostafa110)
-- Frontend Mentor - [@YourUsername](https://www.frontendmentor.io/profile/YourUsername)
+[@Mohamedmostafa110](https://github.com/Mohamedmostafa110)
 
 ## Acknowledgments
 
