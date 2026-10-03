@@ -1,0 +1,67 @@
+@use 'variables' as *;
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.0625rem; // 33px
+
+  @include desktop {
+    margin-bottom: 2.5625rem; // 41px
+  }
+}
+
+.app__title {
+  font-size: 1.625rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.375em;
+  text-transform: uppercase;
+  color: #fff;
+
+  @include desktop {
+    font-size: 2.5rem;
+  }
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-right: -0.25rem;
+  border-radius: 50%;
+
+  &__icon {
+    grid-area: 1 / 1;
+    width: 1.3125rem;
+    height: auto;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+
+    @include desktop {
+      width: 1.625rem;
+    }
+  }
+
+  // Show the moon in light mode (→ go dark), the sun in dark mode (→ go light)
+  &__icon--sun {
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.6);
+  }
+
+  [data-theme='dark'] & {
+    .theme-toggle__icon--moon {
+      opacity: 0;
+      transform: rotate(45deg) scale(0.6);
+    }
+
+    .theme-toggle__icon--sun {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  &:focus-visible {
+    outline-color: #fff;
+  }
+}

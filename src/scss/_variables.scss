@@ -1,0 +1,29 @@
+// Breakpoint: design is 375px (mobile) and 1440px (desktop)
+$bp-desktop: 37.5rem; // 600px
+
+@mixin desktop {
+  @media (min-width: $bp-desktop) {
+    @content;
+  }
+}
+
+// Raw palette (from style-guide.md)
+$blue-500: hsl(220, 98%, 61%);
+$check-from: hsl(192, 100%, 67%);
+$check-to: hsl(280, 87%, 65%);
+
+$gray-50: hsl(0, 0%, 98%);
+$gray-300: hsl(233, 11%, 84%);
+$gray-600: hsl(236, 9%, 61%);
+$border-light: hsl(236, 33%, 92%);
+$navy-850: hsl(235, 19%, 35%);
+
+$navy-950: hsl(235, 21%, 11%);
+$navy-900: hsl(235, 24%, 19%);
+$purple-100: hsl(236, 33%, 92%);
+$purple-300: hsl(234, 39%, 85%);
+$purple-600: hsl(235, 16%, 43%);
+$purple-700: hsl(233, 14%, 35%);
+$purple-800: hsl(237, 14%, 26%);
+
+$font: 'Josefin Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;

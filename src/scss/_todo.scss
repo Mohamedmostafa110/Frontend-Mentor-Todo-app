@@ -1,0 +1,334 @@
+@use 'variables' as *;
+
+$row-height-mobile: 3.25rem; // 52px
+$row-height-desktop: 4rem; // 64px
+
+.new-todo,
+.todo-card,
+.filters {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  transition: background-color 0.3s ease;
+}
+
+// ---------- Circle (shared by "new todo" + list items) ----------
+@mixin circle {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+
+  @include desktop {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+// ---------- New todo ----------
+.new-todo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: $row-height-mobile - 0.25rem; // 48px
+  padding-inline: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+
+  @include desktop {
+    height: $row-height-desktop;
+    gap: 1.5rem;
+    padding-inline: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__circle {
+    @include circle;
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0.125rem 0 0;
+    font-size: 0.725rem;
+    background: none;
+    border: 0;
+    outline: 0;
+    caret-color: var(--blue);
+    color: var(--text);
+
+    @include desktop {
+      font-size: 1.1rem;
+    }
+
+    &::placeholder {
+      color: var(--placeholder);
+      opacity: 1;
+    }
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+}
+
+// ---------- Card ----------
+.todo-card {
+  position: relative;
+  margin-bottom: 6.5rem; // room for the mobile filter card (16 + 48) + gap to the hint
+  box-shadow: var(--shadow);
+
+  @include desktop {
+    margin-bottom: 0;
+  }
+}
+
+.todo-list {
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.todo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: $row-height-mobile;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+
+  &:first-child {
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+
+  @include desktop {
+    min-height: $row-height-desktop + 0.0625rem;
+  }
+
+  &__label {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    align-self: stretch;
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    cursor: pointer;
+
+    @include desktop {
+      gap: 1.5rem;
+      padding-left: 1.5rem;
+    }
+  }
+
+  &__circle {
+    @include circle;
+    transition: background 0.15s ease;
+  }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+    padding-top: 0.125rem;
+    font-size: 0.725rem;
+    overflow-wrap: anywhere;
+    color: var(--text);
+    transition: color 0.2s ease;
+
+    @include desktop {
+      font-size: 1.1rem;
+    }
+  }
+
+  // Hover: gradient ring on the circle
+  &__label:hover &__circle,
+  &__checkbox:focus-visible + &__circle {
+    border-color: transparent;
+    background:
+      linear-gradient(var(--surface), var(--surface)) padding-box,
+      var(--check-gradient) border-box;
+  }
+
+  &__checkbox:focus-visible + &__circle {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  // Completed
+  &.is-completed &__circle,
+  &.is-completed &__label:hover &__circle {
+    border-color: transparent;
+    background:
+      url('/images/icon-check.svg') center / 0.6875rem no-repeat,
+      var(--check-gradient);
+  }
+
+  &.is-completed &__text {
+    color: var(--text-completed);
+    text-decoration: line-through;
+  }
+
+  // Delete button (cross)
+  &__delete {
+    flex: none;
+    display: grid;
+    place-items: center;
+    align-self: stretch;
+    width: 2.75rem;
+    padding-right: 0.5rem;
+    color: var(--text-muted);
+    transition: opacity 0.2s ease, color 0.2s ease;
+
+    @include desktop {
+      width: 4.5rem;
+      padding-right: 0.5rem;
+    }
+
+    &:hover {
+      color: var(--text-hover);
+    }
+
+    // Hide the cross until hover/focus on devices that can hover (desktop)
+    @media (min-width: $bp-desktop) and (hover: hover) {
+      opacity: 0;
+    }
+  }
+
+  &:hover &__delete,
+  &__delete:focus-visible,
+  &:focus-within &__delete {
+    opacity: 1;
+  }
+
+  &__delete-icon {
+    display: block;
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: currentColor;
+    mask: url('/images/icon-cross.svg') center / contain no-repeat;
+    -webkit-mask: url('/images/icon-cross.svg') center / contain no-repeat;
+
+    @include desktop {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+  }
+
+  // Empty state
+  &--empty {
+    justify-content: center;
+    padding: 1rem 1.25rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    user-select: auto;
+
+    @include desktop {
+      font-size: 1rem;
+    }
+  }
+
+  // Drag & drop states (SortableJS classes)
+  &.is-ghost {
+    opacity: 0.35;
+  }
+
+  &.is-dragging {
+    box-shadow: var(--shadow);
+    cursor: grabbing;
+  }
+}
+
+// ---------- Footer: count / filters / clear ----------
+.todo-footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: $row-height-mobile;
+  padding-inline: 1.25rem;
+  font-size: 0.725rem;
+  color: var(--text-muted);
+
+  @include desktop {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    min-height: 3.125rem; // 50px
+    padding-inline: 1.5rem;
+    font-size: 0.84rem;
+  }
+
+  &__count {
+    margin: 0;
+  }
+
+  &__clear {
+    justify-self: end;
+    transition: color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      color: var(--text-hover);
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+
+  // Mobile: its own card below the list
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 0;
+  right: 0;
+  height: 3rem;
+  align-items: center;
+  box-shadow: var(--shadow);
+
+  @include desktop {
+    position: static;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    gap: 1.25rem;
+    font-size: 0.84rem;
+  }
+
+  &__btn {
+    color: var(--text-muted);
+    font-weight: 700;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--text-hover);
+    }
+
+    &.is-active,
+    &.is-active:hover {
+      color: var(--blue);
+    }
+  }
+}
+
+.hint {
+  margin-top: 0;
+  text-align: center;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+
+  @include desktop {
+    margin-top: 3.0625rem; // ≈ 49px
+  }
+}

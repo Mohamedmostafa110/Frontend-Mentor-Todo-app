@@ -1,0 +1,45 @@
+@use 'variables' as *;
+
+:root {
+  --blue: #{$blue-500};
+  --check-gradient: linear-gradient(135deg, #{$check-from}, #{$check-to});
+  --radius: 5px;
+  --font: #{$font};
+}
+
+// Light theme (default)
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #{$gray-50};
+  --surface: #fff;
+  --text: #{$navy-850};
+  --text-completed: #{$gray-300};
+  --text-muted: #{$gray-600};
+  --text-hover: #{$navy-850};
+  --placeholder: #{$gray-600};
+  --border: #{$border-light};
+  --shadow: 0 35px 50px -15px hsla(230, 25%, 75%, 0.5);
+
+  --hero-mobile: url('/images/bg-mobile-light.jpg');
+  --hero-desktop: url('/images/bg-desktop-light.jpg');
+}
+
+// Dark theme
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #{$navy-950};
+  --surface: #{$navy-900};
+  --text: #{$purple-300};
+  --text-completed: #{$purple-700};
+  --text-muted: #{$purple-600};
+  --text-hover: #{$purple-100};
+  --placeholder: #{$purple-600};
+  --border: #{$purple-800};
+  --shadow: 0 35px 50px -15px hsla(0, 0%, 0%, 0.5);
+
+  --hero-mobile: url('/images/bg-mobile-dark.jpg');
+  --hero-desktop: url('/images/bg-desktop-dark.jpg');
+}

@@ -1,0 +1,105 @@
+@use 'variables' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font);
+  font-size: 1.125rem; // 18px
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text);
+  background-color: var(--bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+// Background image strip at the top of the page
+.hero {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 200px;
+  z-index: 0;
+  background: var(--hero-mobile) center top / cover no-repeat;
+
+  @include desktop {
+    height: 300px;
+    background-image: var(--hero-desktop);
+  }
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 3rem, 33.75rem); // 24px gutters, 540px max
+  margin-inline: auto;
+  padding-block: 2.875rem 2.5rem; // title center ≈ 58px
+
+  @include desktop {
+    padding-block: 4.8125rem 3rem; // title center ≈ 93px
+  }
+}
+
+.attribution {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding: 1rem 1.5rem 1.5rem;
+  font-size: 0.6875rem;
+  text-align: center;
+  color: var(--text-muted);
+
+  a {
+    color: var(--blue);
+  }
+}
